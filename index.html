@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b292c">
+  <title>星屿修复站</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="main.js" defer></script>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark" aria-hidden="true">✦</span><span>星屿修复站</span></div>
+      <div class="top-actions">
+        <div class="top-progress"><span id="total-count">0 / 9</span> 关已完成</div>
+        <button class="achievement-link" type="button" data-show-achievements>成就 <span id="achievement-count">0 / 13</span></button>
+      </div>
+    </header>
+
+    <main>
+      <section id="map-screen" class="screen map-screen" aria-labelledby="map-title">
+        <div class="section-heading">
+          <div><p class="eyebrow">漂流星球 · 第 07 号基地</p><h1 id="map-title">修复这座小小的基地</h1></div>
+          <p>选择一处设施，完成三项修复任务。</p>
+        </div>
+        <div class="map-frame">
+          <img src="assets/base-map.png" alt="星球基地：左侧休息舱、中间温室、右侧通讯塔" draggable="false">
+          <button class="map-hotspot rest" data-game="rest" aria-label="进入休息舱，玩数字华容道">
+            <span class="repair-beacon" aria-hidden="true"><span class="beacon-core"></span><span class="beacon-rays"></span></span>
+            <span class="hotspot-label"><strong>休息舱</strong><small data-map-status="rest">0 / 3</small></span>
+            <span class="repair-pips" aria-hidden="true"><i></i><i></i><i></i></span>
+          </button>
+          <button class="map-hotspot garden" data-game="garden" aria-label="进入温室，玩旋转水管">
+            <span class="repair-beacon" aria-hidden="true"><span class="beacon-core"></span><span class="beacon-rays"></span></span>
+            <span class="hotspot-label"><strong>温室</strong><small data-map-status="garden">0 / 3</small></span>
+            <span class="repair-pips" aria-hidden="true"><i></i><i></i><i></i></span>
+          </button>
+          <button class="map-hotspot signal" data-game="signal" aria-label="进入通讯塔，玩信号连线">
+            <span class="repair-beacon" aria-hidden="true"><span class="beacon-core"></span><span class="beacon-rays"></span></span>
+            <span class="hotspot-label"><strong>通讯塔</strong><small data-map-status="signal">0 / 3</small></span>
+            <span class="repair-pips" aria-hidden="true"><i></i><i></i><i></i></span>
+          </button>
+        </div>
+        <nav class="location-list" aria-label="基地设施">
+          <button data-game="rest"><span class="location-icon rest-icon">01</span><span><strong>休息舱</strong><small>数字华容道</small></span><span data-list-status="rest">0 / 3</span></button>
+          <button data-game="garden"><span class="location-icon garden-icon">02</span><span><strong>温室</strong><small>旋转水管</small></span><span data-list-status="garden">0 / 3</span></button>
+          <button data-game="signal"><span class="location-icon signal-icon">03</span><span><strong>通讯塔</strong><small>信号连线</small></span><span data-list-status="signal">0 / 3</span></button>
+        </nav>
+        <p id="base-message" class="base-message" hidden>基地已全部修复。九颗小小的信号灯，终于都亮了。</p>
+      </section>
+
+      <section id="achievement-screen" class="screen achievement-screen" aria-labelledby="achievement-title" hidden>
+        <button class="text-button" type="button" data-back-from-achievements>← 返回</button>
+        <div class="achievement-heading">
+          <div><p class="eyebrow">基地档案</p><h1 id="achievement-title">成就图鉴</h1></div>
+          <p id="achievement-summary"></p>
+        </div>
+        <div id="achievement-list" class="achievement-groups"></div>
+      </section>
+
+      <section id="game-screen" class="screen game-screen" aria-labelledby="game-title" hidden>
+        <div class="game-toolbar">
+          <button id="back-button" class="text-button" type="button">← 返回基地</button>
+          <span id="game-counter" class="game-counter">第 1 / 3 关</span>
+        </div>
+        <div class="game-layout">
+          <div class="game-main">
+            <p id="game-kicker" class="eyebrow"></p>
+            <h1 id="game-title"></h1>
+            <p id="game-instruction" class="game-instruction"></p>
+            <div id="board-wrap" class="board-wrap">
+              <div id="game-board" class="game-board"></div>
+            </div>
+            <div class="game-actions">
+              <span id="move-count" class="move-count"></span>
+              <button id="restart-button" class="outline-button" type="button">重新开始</button>
+            </div>
+          </div>
+          <aside class="mission-panel" aria-label="关卡进度">
+            <p class="eyebrow">修复进度</p>
+            <h2 id="mission-title"></h2>
+            <div id="level-list" class="level-list"></div>
+            <p id="game-tip" class="game-tip"></p>
+          </aside>
+        </div>
+      </section>
+    </main>
+  </div>
+  <div id="complete-overlay" class="complete-overlay" hidden>
+    <div class="complete-dialog" role="dialog" aria-modal="true" aria-labelledby="complete-title">
+      <div class="complete-star" aria-hidden="true">✦</div>
+      <p class="eyebrow">修复完成</p>
+      <h2 id="complete-title">能源已接通</h2>
+      <p id="complete-detail"></p>
+      <div id="earned-achievements" class="earned-achievements" aria-live="polite"></div>
+      <div class="complete-actions">
+        <button id="complete-back" class="outline-button" type="button">返回地图</button>
+        <button id="complete-next" class="primary-button" type="button">下一关</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
